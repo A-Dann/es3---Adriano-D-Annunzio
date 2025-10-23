@@ -1,9 +1,6 @@
-## Soluzione Proposta dell'Esercitazione 1
+## Soluzione Proposta dell'Esercitazione 3
 File implementati:
 
-1. EquazioneSecondoGradoModificabileConRisolutore.java
-2. EquazioneSecondoGradoModificabileConRisolutoreTest.java
-3. EquazioniModificabiliTextualFrontEnd.java
-
-Nel caso 3 i commenti /* ... */ o // ... indicano DOVE è stato modificato il file originale e perché.
+1. Prenotazione.java
+2. TimeSlot.java
 
