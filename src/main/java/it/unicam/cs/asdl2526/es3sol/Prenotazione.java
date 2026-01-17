@@ -2,23 +2,17 @@ package it.unicam.cs.asdl2526.es3sol;
 
 /**
  * Una prenotazione riguarda una certa aula per un certo time slot.
- * 
+ *
  * @author Luca Tesei
  *
  */
 public class Prenotazione implements Comparable<Prenotazione> {
 
-    private final String aula;
-
-    private final TimeSlot timeSlot;
-
-    private String docente;
-
-    private String motivo;
-
+    String aula, docente, motivo;
+    TimeSlot orario;
     /**
      * Costruisce una prenotazione.
-     * 
+     *
      * @param aula
      *                     l'aula a cui la prenotazione si riferisce
      * @param timeSlot
@@ -31,22 +25,12 @@ public class Prenotazione implements Comparable<Prenotazione> {
      *                                  se uno qualsiasi degli oggetti passati è
      *                                  null
      */
-    public Prenotazione(String aula, TimeSlot timeSlot, String docente,
-            String motivo) {
-        if (aula == null)
-            throw new NullPointerException(
-                    "Tentativo di costruire una prenotazione senza aula");
-        if (timeSlot == null)
-            throw new NullPointerException(
-                    "Tentativo di costruire una prenotazione senza time slot");
-        if (docente == null)
-            throw new NullPointerException(
-                    "Tentativo di costruire una prenotazione senza docente");
-        if (motivo == null)
-            throw new NullPointerException(
-                    "Tentativo di costruire una prenotazione senza motivo");
+    public Prenotazione(String aula, TimeSlot timeSlot, String docente, String motivo) {
+        if(aula == null || timeSlot == null || docente == null || motivo == null)
+            throw new NullPointerException("Nessuno dei parametri può essere null");
+
         this.aula = aula;
-        this.timeSlot = timeSlot;
+        this.orario = timeSlot;
         this.docente = docente;
         this.motivo = motivo;
     }
@@ -62,7 +46,7 @@ public class Prenotazione implements Comparable<Prenotazione> {
      * @return the timeSlot
      */
     public TimeSlot getTimeSlot() {
-        return timeSlot;
+        return orario;
     }
 
     /**
@@ -102,22 +86,13 @@ public class Prenotazione implements Comparable<Prenotazione> {
      */
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if(this == obj)
             return true;
-        if (!(obj instanceof Prenotazione))
+        if(!(obj instanceof Prenotazione))
             return false;
-        Prenotazione other = (Prenotazione) obj;
-        if (aula == null) {
-            if (other.aula != null)
-                return false;
-        } else if (!aula.equals(other.aula))
-            return false;
-        if (timeSlot == null) {
-            if (other.timeSlot != null)
-                return false;
-        } else if (!timeSlot.equals(other.timeSlot))
-            return false;
-        return true;
+
+        Prenotazione prenotazione = (Prenotazione) obj;
+        return aula.equals(prenotazione.getAula()) && orario.equals(prenotazione.getTimeSlot());
     }
 
     /*
@@ -126,11 +101,11 @@ public class Prenotazione implements Comparable<Prenotazione> {
      */
     @Override
     public int hashCode() {
-        final int prime = 31;
+        int prime = 17;
         int result = 1;
-        result = prime * result + ((aula == null) ? 0 : aula.hashCode());
-        result = prime * result
-                + ((timeSlot == null) ? 0 : timeSlot.hashCode());
+        result = prime * result + aula.hashCode();
+        result = prime * result + orario.hashCode();
+
         return result;
     }
 
@@ -141,17 +116,16 @@ public class Prenotazione implements Comparable<Prenotazione> {
      */
     @Override
     public int compareTo(Prenotazione o) {
-        int cmp = this.timeSlot.compareTo(o.timeSlot);
-        if (cmp != 0)
+        int cmp = this.orario.compareTo(o.orario);
+        if(cmp != 0)
             return cmp;
-        // se hanno lo stesso time slot vale l'ordine tra aule
-        return this.aula.compareTo(o.aula);
+
+        return aula.compareToIgnoreCase(o.aula);
     }
 
     @Override
     public String toString() {
-        return "Prenotazione [aula = " + aula + ", time slot =" + timeSlot
-                + ", docente=" + docente + ", motivo=" + motivo + "]";
+        return "Prenotazione in aula:" + aula + ", orario: " + orario + ", docente:" + docente + ", motivo:" + motivo + ".";
     }
 
 }
